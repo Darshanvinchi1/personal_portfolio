@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import gsap, { Power3, Sine } from "gsap";
+import gsap, { Power1, Power3, Power4, Sine, TimelineMax } from "gsap";
 import { cn } from "@/lib/utils";
 import { BsArrowRightShort } from "react-icons/bs";
 
 const Header = () => {
+	const fullMenu = useRef<HTMLDivElement | null>(null);
+
 	const item1 = useRef<HTMLDivElement | null>(null);
 	const item2 = useRef<HTMLDivElement | null>(null);
 	const item3 = useRef<HTMLDivElement | null>(null);
@@ -18,9 +20,19 @@ const Header = () => {
 	const menuOpen = useRef<HTMLDivElement | null>(null);
 	const tl = useRef(gsap.timeline({ paused: true }));
 	const menuItemTl = useRef(gsap.timeline({ paused: true }));
+	const tl1 = gsap.timeline();
 
 	const [openMenu, setOpenMenu] = useState(false);
 	const [menuItemsPlayed, setMenuItemsPlayed] = useState(false);
+
+	useEffect(() => {
+		tl1.from(fullMenu.current, {
+			y: -100,
+			opacity: 0,
+			duration: 1,
+			ease: Power1.easeIn,
+		});
+	}, []);
 
 	useEffect(() => {
 		const menuOpenRef = menuOpen.current;
@@ -148,6 +160,24 @@ const Header = () => {
 		};
 	}, [openMenu, tl, menuItemTl, menuItemsPlayed]);
 
+	const MouseEnertItem1 = () => {
+		const animation = new TimelineMax({ paused: true });
+		// const animation = tl.current;
+
+		animation
+			.staggerTo(
+				menuItem1.current,
+				0.1,
+				{
+					text: "HOME",
+					y: "-100%",
+					ease: Power4.easeOut,
+				},
+				-0.025,
+			)
+			.play();
+	};
+
 	const onMovesEnter = () => {
 		const animation = tl.current;
 		animation
@@ -181,7 +211,7 @@ const Header = () => {
 	};
 
 	return (
-		<div className='flex flex-col items-end justify-end gap-4'>
+		<div ref={fullMenu} className='flex flex-col items-end justify-end gap-4'>
 			<div className='mr-2 mb-2 relative'>
 				{openMenu && (
 					<div

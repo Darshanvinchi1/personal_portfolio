@@ -13,7 +13,8 @@ const Hero = () => {
 		tl.from(camera.current, {
 			opacity: 0,
 			y: -100,
-			duration: 1,
+			scale: 1,
+			duration: 2,
 			ease: Sine.easeIn,
 		});
 
@@ -31,11 +32,11 @@ const Hero = () => {
 
 	return (
 		<div className='min-h-screen flex items-center justify-center relative'>
-			<Suspense fallback={<></>}>
-				<div ref={camera} className='flex items-center w-full h-screen'>
-					<Camera />
-				</div>
-			</Suspense>
+			{/* <Suspense fallback={<></>}> */}
+			<div ref={camera} className='flex items-center w-full h-screen'>
+				<Camera />
+			</div>
+			{/* </Suspense> */}
 			<h1
 				ref={textRef}
 				className='absolute text-[3rem] md:text-[4rem] font-bold text-center'>
