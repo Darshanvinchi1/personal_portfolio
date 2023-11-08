@@ -13,7 +13,7 @@ const Blob = () => {
 			u_time: { value: 0 },
 			u_intensity: { value: 0 },
 		};
-	});
+	}, []);
 
 	useFrame((state) => {
 		const { clock } = state;

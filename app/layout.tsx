@@ -25,11 +25,11 @@ export default function RootLayout({
 					defaultTheme='dark'
 					enableSystem
 					disableTransitionOnChange>
-					<div className='w-full max-w-7xl mx-auto relative'>
-						{children}
-						<div className='absolute bottom-0 right-0'>
+					<div className='w-full max-w-full mx-auto relative'>
+						<div className='absolute w-full top-1 p-4 z-50'>
 							<Header />
 						</div>
+						<div className='h-[40px]'>{children}</div>
 					</div>
 				</ThemeProvider>
 			</body>

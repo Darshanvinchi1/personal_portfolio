@@ -20,12 +20,12 @@ const Header = () => {
 	const menuOpen = useRef<HTMLDivElement | null>(null);
 	const tl = useRef(gsap.timeline({ paused: true }));
 	const menuItemTl = useRef(gsap.timeline({ paused: true }));
-	const tl1 = gsap.timeline();
 
 	const [openMenu, setOpenMenu] = useState(false);
 	const [menuItemsPlayed, setMenuItemsPlayed] = useState(false);
 
 	useEffect(() => {
+		const tl1 = gsap.timeline();
 		tl1.from(fullMenu.current, {
 			y: -100,
 			opacity: 0,
@@ -61,8 +61,7 @@ const Header = () => {
 					item1.current,
 					{
 						y: 0,
-						rotateZ: 120,
-						width: 14,
+						rotateZ: 128,
 						ease: Sine.easeIn,
 					},
 					"-=0.5",
@@ -71,8 +70,7 @@ const Header = () => {
 					item2.current,
 					{
 						y: -5,
-						width: 14,
-						rotateZ: 60,
+						rotateZ: 50,
 						ease: Sine.easeIn,
 					},
 					"-=0.5",
@@ -83,6 +81,13 @@ const Header = () => {
 						y: 0,
 						opacity: 0,
 						ease: Sine.easeIn,
+					},
+					"-=0.5",
+				)
+				.to(
+					menuClose.current,
+					{
+						top: "0.25rem",
 					},
 					"-=0.5",
 				)
@@ -118,15 +123,15 @@ const Header = () => {
 			animation
 				.to(menuOpenRef, {
 					duration: 0.6,
-					width: "2.3rem",
-					height: "2.2rem",
+					width: "2.5rem",
+					height: "2.5rem",
 				})
 				.to(
 					item1.current,
 					{
 						y: 0,
 						rotateZ: 0,
-						width: 12,
+						width: 15,
 						ease: Sine.easeIn,
 					},
 					"-=0.6",
@@ -135,7 +140,7 @@ const Header = () => {
 					item2.current,
 					{
 						y: 0,
-						width: 12,
+						width: 15,
 						rotateZ: 0,
 						ease: Sine.easeIn,
 					},
@@ -150,6 +155,13 @@ const Header = () => {
 					},
 					"-=0.6",
 				)
+				.to(
+					menuClose.current,
+					{
+						top: "0rem",
+					},
+					"-=0.5",
+				)
 				.play();
 		}
 
@@ -160,23 +172,23 @@ const Header = () => {
 		};
 	}, [openMenu, tl, menuItemTl, menuItemsPlayed]);
 
-	const MouseEnertItem1 = () => {
-		const animation = new TimelineMax({ paused: true });
-		// const animation = tl.current;
+	// const MouseEnertItem1 = () => {
+	// 	const animation = new TimelineMax({ paused: true });
+	// 	// const animation = tl.current;
 
-		animation
-			.staggerTo(
-				menuItem1.current,
-				0.1,
-				{
-					text: "HOME",
-					y: "-100%",
-					ease: Power4.easeOut,
-				},
-				-0.025,
-			)
-			.play();
-	};
+	// 	animation
+	// 		.staggerTo(
+	// 			menuItem1.current,
+	// 			0.1,
+	// 			{
+	// 				text: "HOME",
+	// 				y: "-100%",
+	// 				ease: Power4.easeOut,
+	// 			},
+	// 			-0.025,
+	// 		)
+	// 		.play();
+	// };
 
 	const onMovesEnter = () => {
 		const animation = tl.current;
@@ -211,8 +223,13 @@ const Header = () => {
 	};
 
 	return (
-		<div ref={fullMenu} className='flex flex-col items-end justify-end gap-4'>
-			<div className='mr-2 mb-2 relative'>
+		<div
+			ref={fullMenu}
+			className='flex items-start justify-between gap-4 relative'>
+			<div className='text-lg font-bold cursor-pointer'>
+				<h1>Darshan Vinchi</h1>
+			</div>
+			<div className='relative justify-end right-0'>
 				{openMenu && (
 					<div
 						className={cn(
@@ -266,28 +283,32 @@ const Header = () => {
 						setOpenMenu(!openMenu);
 					}}
 					ref={menuClose}
-					onMouseEnter={onMovesEnter}
+					onMouseEnter={() => {
+						if (!openMenu) {
+							onMovesEnter();
+						}
+					}}
 					onMouseLeave={onMovesLeave}
-					className='p-3 absolute bottom-0 right-0 w-[2.3rem] h-[2.2rem] cursor-pointer rounded-md'>
-					<div className='absolute bottom-3 right-3 flex flex-col gap-1'>
+					className='p-3 absolute top-0 right-0 w-[2.5rem] h-[2.5rem] cursor-pointer rounded-md'>
+					<div className='absolute top-3 right-3 flex flex-col gap-[0.3rem]'>
 						<div
 							ref={item1}
-							className='bg-white border border-white w-[12px]'
+							className='bg-white border border-white w-[15px]'
 						/>
 						<div
 							ref={item2}
-							className='bg-white border border-white w-[12px]'
+							className='bg-white border border-white w-[15px]'
 						/>
 						<div
 							ref={item3}
-							className='bg-white border border-white w-[12px]'
+							className='bg-white border border-white w-[15px]'
 						/>
 					</div>
 				</div>
 				<div
 					//@ts-ignore
 					ref={menuOpen}
-					className='border w-[2.3rem] h-[2.2rem] rounded-md p-4 bg-slate-800'></div>
+					className='border w-[2.5rem] h-[2.5rem] rounded-md p-4 bg-black'></div>
 			</div>
 		</div>
 	);
